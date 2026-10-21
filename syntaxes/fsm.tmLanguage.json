@@ -1,0 +1,145 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "State Machine Diagram",
+  "scopeName": "source.fsm",
+  "fileTypes": [
+    "fsm"
+  ],
+  "patterns": [
+    {
+      "name": "comment.line.double-slash.fsm",
+      "match": "^\\s*//.*$"
+    },
+    {
+      "match": "^(\\s*)(note)(\\s+)(on)(\\s+)([A-Za-z0-9_]+)(?:\\s+(width)\\s+(-?[0-9]+))?\\s*(:)(\\s+)(.*)$",
+      "captures": {
+        "2": {
+          "name": "keyword.other.fsm"
+        },
+        "4": {
+          "name": "keyword.other.fsm"
+        },
+        "6": {
+          "name": "entity.name.type.fsm"
+        },
+        "7": {
+          "name": "keyword.other.fsm"
+        },
+        "8": {
+          "name": "constant.numeric.fsm"
+        },
+        "9": {
+          "name": "punctuation.separator.fsm"
+        },
+        "11": {
+          "name": "string.unquoted.note.fsm"
+        }
+      }
+    },
+    {
+      "match": "^\\s*(title|direction)\\s*(:)\\s+(.*)$",
+      "captures": {
+        "1": {
+          "name": "keyword.other.fsm"
+        },
+        "2": {
+          "name": "punctuation.separator.fsm"
+        },
+        "3": {
+          "name": "string.unquoted.label.fsm"
+        }
+      }
+    },
+    {
+      "match": "^\\s*(state|choice)\\s+([A-Za-z0-9_]+)(.*)$",
+      "captures": {
+        "1": {
+          "name": "keyword.declaration.fsm"
+        },
+        "2": {
+          "name": "entity.name.type.fsm"
+        },
+        "3": {
+          "patterns": [
+            {
+              "include": "#declaration-tail"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "match": "^\\s*(entry|exit)\\s*(:)\\s+(.*)$",
+      "captures": {
+        "1": {
+          "name": "keyword.control.fsm"
+        },
+        "2": {
+          "name": "punctuation.separator.fsm"
+        },
+        "3": {
+          "name": "string.unquoted.action.fsm"
+        }
+      }
+    },
+    {
+      "match": "^\\s*(on)\\s+([A-Za-z0-9_]+)\\s*(:)\\s+(.*)$",
+      "captures": {
+        "1": {
+          "name": "keyword.control.fsm"
+        },
+        "2": {
+          "name": "entity.name.function.fsm"
+        },
+        "3": {
+          "name": "punctuation.separator.fsm"
+        },
+        "4": {
+          "name": "string.unquoted.action.fsm"
+        }
+      }
+    },
+    {
+      "match": "^\\s*([A-Za-z0-9_]+)\\s+(->)\\s+([A-Za-z0-9_]+)(?:\\s*(:)\\s+(.*))?$",
+      "captures": {
+        "1": {
+          "name": "entity.name.type.fsm"
+        },
+        "2": {
+          "name": "keyword.operator.arrow.fsm"
+        },
+        "3": {
+          "name": "entity.name.type.fsm"
+        },
+        "4": {
+          "name": "punctuation.separator.fsm"
+        },
+        "5": {
+          "name": "string.unquoted.label.fsm"
+        }
+      }
+    },
+    {
+      "name": "punctuation.section.block.fsm",
+      "match": "[{}]"
+    }
+  ],
+  "repository": {
+    "declaration-tail": {
+      "patterns": [
+        {
+          "name": "storage.type.stereotype.fsm",
+          "match": "<<[^>\\n]+>>"
+        },
+        {
+          "name": "string.unquoted.label.fsm",
+          "match": ":\\s+[^\\n{<]+"
+        },
+        {
+          "name": "punctuation.section.block.fsm",
+          "match": "[{}]"
+        }
+      ]
+    }
+  }
+}

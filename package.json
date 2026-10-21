@@ -1,0 +1,111 @@
+{
+  "name": "drawiogen",
+  "displayName": "drawiogen",
+  "publisher": "dluk1",
+  "license": "GPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ldaschinger/drawiogen-vscode-extension"
+  },
+  "description": "Generate and validate draw.io diagrams from .seq, .fsm, and .cls files",
+  "version": "0.0.13",
+  "engines": {
+    "vscode": "^1.85.2"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onLanguage:seq",
+    "onLanguage:fsm",
+    "onLanguage:cls",
+    "workspaceContains:**/*.seq",
+    "workspaceContains:**/*.fsm",
+    "workspaceContains:**/*.cls"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "languages": [
+      {
+        "id": "seq",
+        "aliases": [
+          "Sequence Diagram",
+          "seq"
+        ],
+        "extensions": [
+          ".seq"
+        ]
+      },
+      {
+        "id": "fsm",
+        "aliases": [
+          "State Machine Diagram",
+          "fsm"
+        ],
+        "extensions": [
+          ".fsm"
+        ],
+        "configuration": "./fsm.language-configuration.json"
+      },
+      {
+        "id": "cls",
+        "aliases": [
+          "Class Diagram",
+          "cls"
+        ],
+        "extensions": [
+          ".cls"
+        ],
+        "configuration": "./cls.language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "seq",
+        "scopeName": "source.seq",
+        "path": "./syntaxes/seq.tmLanguage.json"
+      },
+      {
+        "language": "cls",
+        "scopeName": "source.cls",
+        "path": "./syntaxes/cls.tmLanguage.json"
+      },
+      {
+        "language": "fsm",
+        "scopeName": "source.fsm",
+        "path": "./syntaxes/fsm.tmLanguage.json"
+      }
+    ],
+    "commands": [
+      {
+        "command": "drawiogen.generate",
+        "title": "drawiogen: Generate .drawio from current diagram file"
+      },
+      {
+        "command": "drawiogen.preview",
+        "title": "drawiogen: Open Preview to the Side"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src",
+    "test": "vscode-test",
+    "test:integration": "npm run compile && node --test test/*.test.cjs"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.10",
+    "@types/node": "22.x",
+    "@types/vscode": "^1.85.0",
+    "@vscode/test-cli": "^0.0.12",
+    "@vscode/test-electron": "^2.5.2",
+    "eslint": "^9.39.3",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.56.1",
+    "vscode-oniguruma": "^2.0.1",
+    "vscode-textmate": "^9.3.2"
+  }
+}

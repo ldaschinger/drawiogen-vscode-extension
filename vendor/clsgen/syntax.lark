@@ -1,0 +1,65 @@
+start: statement_list
+
+statement_list: statement*
+
+statement: title
+         | note
+         | direction
+         | arrangement
+         | same_size
+         | align_horizontal
+         | top_row
+         | container
+         | block
+         | leaf
+         | relation
+
+title: "title" _SPACE* ":" _SPACE+ TEXT _NEWLINE
+direction: "direction" _SPACE* ":" _SPACE+ DIRECTION _NEWLINE
+arrangement: "arrange" _SPACE* ":" _SPACE+ DIRECTION _NEWLINE
+same_size: "same-size" _SPACE* ":" _SPACE+ NAME (_SPACE+ NAME)+ _NEWLINE
+align_horizontal: "align-horizontal" _SPACE* ":" _SPACE+ NAME (_SPACE+ NAME)+ _NEWLINE
+top_row: "top-row" _SPACE* ":" _SPACE+ NAME (_SPACE+ NAME)+ _NEWLINE
+DIRECTION: /TB|LR/
+
+// package / component that contains other elements
+container: CONTAINER_KIND _SPACE+ NAME label? _SPACE* "{" _NEWLINE statement_list "}" _NEWLINE
+CONTAINER_KIND: /package|component/
+
+// class / interface / enum with members
+block: CLASS_KIND _SPACE+ NAME label? stereotype? _SPACE* "{" _NEWLINE member_line* "}" _NEWLINE
+member_line: (MEMBER | LITERAL) _NEWLINE
+CLASS_KIND: /class|interface|enum/
+MEMBER: /[+\-#~][^\n]*/
+LITERAL: /[A-Za-z_][^\n]*/
+
+// element without body
+leaf: LEAF_KIND _SPACE+ NAME label? stereotype? _NEWLINE
+LEAF_KIND: /component|class|interface|enum/
+
+label: _SPACE* ":" _SPACE+ LABEL
+stereotype: _SPACE+ STEREOTYPE
+LABEL: /[^\n{<]*[^\n{<\s]/
+STEREOTYPE: /<<[^>\n]+>>/
+
+relation: NAME (_SPACE+ src_mult)? _SPACE+ ARROW _SPACE+ (tgt_mult _SPACE+)? NAME (_SPACE* ":" _SPACE+ TEXT)? _NEWLINE
+src_mult: QUOTED
+tgt_mult: QUOTED
+QUOTED: /"[^"\n]*"/
+ARROW: /--\|>|\.\.\|>|\*--|o--|-->|\.\.>|\.\.|--/
+
+note: "note" _SPACE+ "on" _SPACE+ NAME (_SPACE+ "width" _SPACE+ INT)? _SPACE* ":" _SPACE+ TEXT _NEWLINE
+INT: /-?[0-9]+/
+
+TEXT: /[^\n]+/
+NAME: /[A-Za-z0-9_]+/
+
+_SPACE: /[ \t]+/
+_NEWLINE: "\n"
+_BEGIN: /^/m
+_END: /$/m
+
+%ignore _BEGIN _SPACE* /\/\/.*/ _NEWLINE // comments
+%ignore _BEGIN _SPACE* _NEWLINE // empty lines
+%ignore _BEGIN _SPACE+ // leading white space
+%ignore _SPACE+ _END // trailing white space

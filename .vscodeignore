@@ -1,0 +1,20 @@
+.vscode/**
+.vscode-test/**
+.claude/**
+src/**
+test/**
+.gitignore
+.yarnrc
+vsc-extension-quickstart.md
+**/tsconfig.json
+**/eslint.config.mjs
+**/*.map
+**/*.ts
+**/.vscode-test.*
+out/test/**
+vendor/**/__pycache__/**
+
+# Local firmware-derived examples
+vendor/clsgen/examples/TherapyPreparation_Classes.cls
+vendor/clsgen/examples/TherapyPreparation_Components.cls
+vendor/fsmgen/examples/SystemCtrl.fsm

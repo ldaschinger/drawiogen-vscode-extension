@@ -1,0 +1,19 @@
+title: Workflow
+initial -> Idle
+state Idle {
+  entry: Reset()
+}
+choice Ready: Ready?
+state Running {
+  entry: StartWork()
+  exit: StopWork()
+  on Tick: Work()
+}
+state Fault
+Idle -> Ready: Start
+Ready -> Running: [ready]
+Ready -> Fault: [else]
+Running -> Idle: Pause
+Running -> Fault: Error
+Running -> final: Stop
+Fault -> Idle: Reset

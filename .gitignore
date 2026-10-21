@@ -1,0 +1,15 @@
+out
+dist
+node_modules
+.vscode-test/
+*.vsix
+**/__pycache__/
+*.pyc
+.DS_Store
+.claude/
+.vscode/
+
+# Local firmware-derived examples
+vendor/clsgen/examples/TherapyPreparation_Classes.cls
+vendor/clsgen/examples/TherapyPreparation_Components.cls
+vendor/fsmgen/examples/SystemCtrl.fsm

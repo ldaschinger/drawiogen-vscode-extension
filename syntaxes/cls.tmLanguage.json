@@ -1,0 +1,198 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Class Diagram",
+  "scopeName": "source.cls",
+  "fileTypes": [
+    "cls"
+  ],
+  "patterns": [
+    {
+      "name": "comment.line.double-slash.cls",
+      "match": "^\\s*//.*$"
+    },
+    {
+      "match": "^(\\s*)(note)(\\s+)(on)(\\s+)([A-Za-z0-9_]+)(?:\\s+(width)\\s+(-?[0-9]+))?\\s*(:)(\\s+)(.*)$",
+      "captures": {
+        "2": {
+          "name": "keyword.other.cls"
+        },
+        "4": {
+          "name": "keyword.other.cls"
+        },
+        "6": {
+          "name": "entity.name.type.cls"
+        },
+        "7": {
+          "name": "keyword.other.cls"
+        },
+        "8": {
+          "name": "constant.numeric.cls"
+        },
+        "9": {
+          "name": "punctuation.separator.cls"
+        },
+        "11": {
+          "name": "string.unquoted.note.cls"
+        }
+      }
+    },
+    {
+      "match": "^\\s*(title|direction|arrange|same-size|align-horizontal|top-row)\\s*(:)\\s+(.*)$",
+      "captures": {
+        "1": {
+          "name": "keyword.other.cls"
+        },
+        "2": {
+          "name": "punctuation.separator.cls"
+        },
+        "3": {
+          "name": "string.unquoted.label.cls"
+        }
+      }
+    },
+    {
+      "begin": "^\\s*(enum)\\s+([A-Za-z0-9_]+)([^\\n{]*)(\\{)\\s*$",
+      "beginCaptures": {
+        "1": {
+          "name": "keyword.declaration.cls"
+        },
+        "2": {
+          "name": "entity.name.type.cls"
+        },
+        "3": {
+          "patterns": [
+            {
+              "include": "#declaration-tail"
+            }
+          ]
+        },
+        "4": {
+          "name": "punctuation.section.block.cls"
+        }
+      },
+      "end": "^\\s*(\\})\\s*$",
+      "endCaptures": {
+        "1": {
+          "name": "punctuation.section.block.cls"
+        }
+      },
+      "patterns": [
+        {
+          "name": "comment.line.double-slash.cls",
+          "match": "^\\s*//.*$"
+        },
+        {
+          "match": "^\\s*([A-Za-z_][A-Za-z0-9_]*)(?:\\s*(=)\\s*(.*))?$",
+          "captures": {
+            "1": {
+              "name": "constant.other.enum.cls"
+            },
+            "2": {
+              "name": "keyword.operator.assignment.cls"
+            },
+            "3": {
+              "name": "constant.numeric.cls"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "match": "^\\s*(package|component|class|interface|enum)\\s+([A-Za-z0-9_]+)(.*)$",
+      "captures": {
+        "1": {
+          "name": "keyword.declaration.cls"
+        },
+        "2": {
+          "name": "entity.name.type.cls"
+        },
+        "3": {
+          "patterns": [
+            {
+              "include": "#declaration-tail"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "begin": "^\\s*([+\\-#~])\\s*",
+      "beginCaptures": {
+        "1": {
+          "name": "storage.modifier.cls"
+        }
+      },
+      "end": "$",
+      "patterns": [
+        {
+          "match": "([A-Za-z_][A-Za-z0-9_]*)\\s*(?=\\()",
+          "captures": {
+            "1": {
+              "name": "entity.name.function.cls"
+            }
+          }
+        },
+        {
+          "match": "[A-Za-z_][A-Za-z0-9_]*",
+          "name": "variable.other.member.cls"
+        },
+        {
+          "name": "support.type.cls",
+          "match": "(?<=:)\\s*[A-Za-z_][A-Za-z0-9_]*"
+        },
+        {
+          "name": "constant.numeric.cls",
+          "match": "\\b[0-9]+\\b"
+        }
+      ]
+    },
+    {
+      "match": "^\\s*([A-Za-z0-9_]+)(\\s+\"[^\"\\n]*\")?\\s+(--\\|>|\\.\\.\\|>|\\*--|o--|-->|\\.\\.>|--|\\.\\.)\\s+(\"[^\"\\n]*\"\\s+)?([A-Za-z0-9_]+)(?:\\s*(:)\\s+(.*))?$",
+      "captures": {
+        "1": {
+          "name": "entity.name.type.cls"
+        },
+        "2": {
+          "name": "string.quoted.double.cls"
+        },
+        "3": {
+          "name": "keyword.operator.arrow.cls"
+        },
+        "4": {
+          "name": "string.quoted.double.cls"
+        },
+        "5": {
+          "name": "entity.name.type.cls"
+        },
+        "6": {
+          "name": "punctuation.separator.cls"
+        },
+        "7": {
+          "name": "string.unquoted.label.cls"
+        }
+      }
+    },
+    {
+      "name": "punctuation.section.block.cls",
+      "match": "[{}]"
+    }
+  ],
+  "repository": {
+    "declaration-tail": {
+      "patterns": [
+        {
+          "name": "storage.type.stereotype.cls",
+          "match": "<<[^>\\n]+>>"
+        },
+        {
+          "name": "string.unquoted.label.cls",
+          "match": ":\\s+[^\\n{<]+"
+        },
+        {
+          "name": "punctuation.section.block.cls",
+          "match": "[{}]"
+        }
+      ]
+    }
+  }
+}

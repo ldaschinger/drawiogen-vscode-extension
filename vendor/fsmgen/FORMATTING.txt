@@ -1,0 +1,21 @@
+Optional diagram-wide FSM transition formatting (values in pixels):
+
+transition-spacing: 110
+transition-label-width: 300
+
+transition-spacing adds a minimum gap between state ranks, in addition to the
+space the automatic layout reserves for labels. Increase it for longer arrows.
+The default is 50.4 px. It follows direction: TB or direction: LR.
+
+transition-label-width sets the preferred line width of transition labels.
+Increase it for longer text lines and fewer wraps; decrease it for narrower,
+taller labels. Without this setting, the existing 32-character wrap is retained.
+Both options must be greater than zero and apply to the entire diagram.
+
+You can still place explicit line breaks in an individual label using literal
+backslash-n sequences, for example:
+
+Idle -> Evaluation : evSummaryAvailable [isLatestSummary == true]/\nevaluateStallingSumary
+
+Text is preserved. The formatter measures the selected font, wraps as needed,
+and reserves space for the resulting labels before routing the transitions.

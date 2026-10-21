@@ -1,0 +1,48 @@
+start: statement_list
+
+statement_list: statement*
+
+statement: title
+         | note
+         | direction
+         | transition_spacing
+         | transition_label_width
+         | choice
+         | state
+         | transition
+
+title: "title" _SPACE* ":" _SPACE+ TEXT _NEWLINE
+direction: "direction" _SPACE* ":" _SPACE+ DIRECTION _NEWLINE
+DIRECTION: /TB|LR/
+transition_spacing: "transition-spacing" _SPACE* ":" _SPACE+ NUMBER _NEWLINE
+transition_label_width: "transition-label-width" _SPACE* ":" _SPACE+ NUMBER _NEWLINE
+NUMBER: /-?[0-9]+(?:\.[0-9]+)?/
+
+choice: "choice" _SPACE+ NAME state_label? _NEWLINE
+
+state: "state" _SPACE+ NAME state_label? _NEWLINE -> state_leaf
+     | "state" _SPACE+ NAME state_label? _SPACE* "{" _NEWLINE state_item* "}" _NEWLINE -> state_block
+state_label: _SPACE* ":" _SPACE+ LABEL
+LABEL: /[^\n{]+/
+state_item: entry | exit | internal
+entry: "entry" _SPACE* ":" _SPACE+ TEXT _NEWLINE
+exit: "exit" _SPACE* ":" _SPACE+ TEXT _NEWLINE
+internal: "on" _SPACE+ NAME _SPACE* ":" _SPACE+ TEXT _NEWLINE
+
+transition: NAME _SPACE+ "->" _SPACE+ NAME (_SPACE* ":" _SPACE+ TEXT)? _NEWLINE
+
+note: "note" _SPACE+ "on" _SPACE+ NAME (_SPACE+ "width" _SPACE+ INT)? _SPACE* ":" _SPACE+ TEXT _NEWLINE
+INT: /-?[0-9]+/
+
+TEXT: /[^\n]+/
+NAME: /[A-Za-z0-9_]+/
+
+_SPACE: /[ \t]+/
+_NEWLINE: "\n"
+_BEGIN: /^/m
+_END: /$/m
+
+%ignore _BEGIN _SPACE* /\/\/.*/ _NEWLINE // comments
+%ignore _BEGIN _SPACE* _NEWLINE // empty lines
+%ignore _BEGIN _SPACE+ // leading white space
+%ignore _SPACE+ _END // trailing white space

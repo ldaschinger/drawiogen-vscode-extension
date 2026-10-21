@@ -1,0 +1,18 @@
+title: State machine annotations
+initial -> Idle
+state Idle {
+  entry: Reset()
+}
+choice Ready: Ready?
+state Running {
+  on Tick: Work()
+}
+state Fault
+Idle -> Ready: Start
+Ready -> Running: [ready]
+Ready -> Fault: [else]
+Running -> final: Stop
+Fault -> final: Reset
+note on Idle: Waiting for Start.\nReset runs on entry.
+note on Ready width 180: Branch labels are descriptive guards.
+note on final: Shared terminal state.
