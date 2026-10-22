@@ -9,7 +9,7 @@
   },
   "description": "Generate and validate draw.io diagrams from .seq, .fsm, and .cls files",
   "icon": "images/logo.png",
-  "version": "0.0.18",
+  "version": "0.0.19",
   "engines": {
     "vscode": "^1.85.2"
   },
