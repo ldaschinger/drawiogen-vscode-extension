@@ -1,5 +1,11 @@
 # drawiogen
 
+**Requirements: Python 3.9+ and Graphviz.**
+Install both on the PATH of the environment where the extension runs, including WSL or a devcontainer.
+Graphviz `dot` is needed for `.fsm` and `.cls` generation; `.cls` routing also needs `neato`.
+The code uses `removeprefix()`, which requires Python 3.9+.
+Python detection currently accepts any Python 3 version, so check the installed version explicitly.
+
 Generate and validate editable draw.io diagrams from text in VS Code: sequence diagrams (`.seq`), class/component diagrams (`.cls`), and state machines (`.fsm`). Save a source file to generate its sibling `.drawio` file and open it beside the source.
 
 Commands in the Command Palette:
@@ -35,7 +41,7 @@ Write raw diagram text into the source file. Use meaningful identifiers, declare
 
 ## Validate and generate every authored file
 
-Run the commands below from this directory. Python 3 is required; Lark is bundled. Generation of `.fsm` and `.cls` also requires Graphviz `dot`, and `.cls` relationship routing requires `neato`.
+Run the commands below from this directory. Python 3.9+ is required; Lark is bundled. Generation of `.fsm` and `.cls` also requires Graphviz `dot`, and `.cls` relationship routing requires `neato`.
 
 Save the source, then run its checker with the source on standard input:
 
@@ -615,8 +621,8 @@ State positions and dimensions are calculated automatically:
 
 - State boxes grow to fit their titles and actions. Long action text wraps, and the box height grows to fit the resulting lines. The preferred maximum width is 420 pixels; long titles or unbroken identifiers may make a box wider. Explicit state width and height directives are not supported.
 - The diagram title tab grows to fit its text.
-- The initial marker occupies the first rank: above the states for `TB`, or to their left for `LR`. Placement follows the entry path when arranging cycles.
-- Transition paths and label positions are preserved in the generated `.drawio`, giving opposing arrows and parallel transitions separate routes. Inspect dense graphs after generation; routing does not guarantee that every possible graph is free of overlaps. Use the transition spacing and label width settings above when more room is needed.
+- The initial marker occupies the first rank: above the states for `TB`, or to their left for `LR`. Placement follows the entry path when arranging cycles. Initial arrows are shortened independently of state spacing, with a 32-pixel gap for unlabeled starts and enough room for captions on labeled starts. Unused leading space is removed from the diagram frame.
+- Transition paths use horizontal and vertical segments with sharp 90-degree corners. Captions are centered directly on straight arrow segments, clear of state boxes and other captions. The generator tries alternative caption positions along existing lines before adding routing space; if captions still cannot fit, it reports an error. Paths and label positions are preserved in the generated `.drawio`, giving opposing arrows and parallel transitions separate routes. Inspect dense graphs after generation; routing does not guarantee that every possible graph is free of overlaps. Use the transition spacing and label width settings above when more room is needed.
 
 Set note widths with the shared note syntax above.
 

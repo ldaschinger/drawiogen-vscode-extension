@@ -23,6 +23,7 @@ INITIAL_STYLE = 'ellipse;html=1;fillColor=#000000;strokeColor=#000000;'
 FINAL_STYLE = 'ellipse;html=1;shape=endState;fillColor=#000000;strokeColor=#000000;'
 EDGE_STYLE = ('edgeStyle=none;noEdgeStyle=1;rounded=0;orthogonalLoop=0;html=1;'
               'endArrow=open;endFill=0;endSize=8;labelBackgroundColor=#ffffff;'
+              'align=center;verticalAlign=middle;labelPosition=center;verticalLabelPosition=middle;'
               f'fontFamily={EDGE_FONT_FAMILY};fontSize={EDGE_FONT_SIZE};')
 FRAME_FONT_SIZE = 12
 FRAME_TITLE_PADDING = 32  # left/right spacing and the slanted tab corner

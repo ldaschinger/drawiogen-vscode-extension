@@ -8,7 +8,8 @@
     "url": "https://github.com/ldaschinger/drawiogen-vscode-extension"
   },
   "description": "Generate and validate draw.io diagrams from .seq, .fsm, and .cls files",
-  "version": "0.0.13",
+  "icon": "images/logo.png",
+  "version": "0.0.18",
   "engines": {
     "vscode": "^1.85.2"
   },
